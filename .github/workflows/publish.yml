@@ -59,4 +59,9 @@ jobs:
       - name: Publish NuGet package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: dotnet nuget push ${{ github.workspace }}/nuget/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --no-symbols --skip-duplicate
+        run: dotnet nuget push ${{ github.workspace }}/nuget/*.nupkg -k $GITHUB_TOKEN -s https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --no-symbols --skip-duplicate
+
+      - name: Publish NuGet package in NuGet Org
+        env:
+          NUGET_API_KEY: ${{ secrets.CODERIFF_NUGET_ORG_API_KEY }}
+        run: dotnet nuget push ${{ github.workspace }}/nuget/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json --no-symbols --skip-duplicate
